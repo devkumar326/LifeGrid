@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0f0f0f;
+  --foreground: #e8e8e8;
+  --surface: #1a1a1a;
+  --surface-hover: #252525;
+  --border: #2a2a2a;
+  --accent: #3b82f6;
+  --accent-hover: #2563eb;
+
+  /* Category colors - mapped in order of categories (0-11) */
+  --cat-0: #000000;
+  --cat-1: #7b3f00;
+  --cat-2: #ff8c00;
+  --cat-3: #ffc107;
+  --cat-4: #2e7d32;
+  --cat-5: #81d4fa;
+  --cat-6: #1e3a8a;
+  --cat-7: #c084fc;
+  --cat-8: #6a1b9a;
+  --cat-9: #1b5e20;
+  --cat-10: #6d4c41;
+  --cat-11: #d2b48c;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* Hour block category colors */
+.cat-0 { background-color: var(--cat-0); }
+.cat-1 { background-color: var(--cat-1); }
+.cat-2 { background-color: var(--cat-2); }
+.cat-3 { background-color: var(--cat-3); }
+.cat-4 { background-color: var(--cat-4); }
+.cat-5 { background-color: var(--cat-5); }
+.cat-6 { background-color: var(--cat-6); }
+.cat-7 { background-color: var(--cat-7); }
+.cat-8 { background-color: var(--cat-8); }
+.cat-9 { background-color: var(--cat-9); }
+.cat-10 { background-color: var(--cat-10); }
+.cat-11 { background-color: var(--cat-11); }
