@@ -22,6 +22,9 @@
   --cat-9: #1b5e20;
   --cat-10: #6d4c41;
   --cat-11: #d2b48c;
+
+  /* Explicit Unassigned hour */
+  --cat-unassigned: #3f3f46;
 }
 
 @theme inline {
@@ -50,3 +53,4 @@ body {
 .cat-9 { background-color: var(--cat-9); }
 .cat-10 { background-color: var(--cat-10); }
 .cat-11 { background-color: var(--cat-11); }
+.cat-unassigned { background-color: var(--cat-unassigned); }

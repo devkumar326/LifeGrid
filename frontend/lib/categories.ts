@@ -4,6 +4,8 @@ export type CategoryDefinition = {
   icon: string;
 };
 
+export const UNASSIGNED = -1 as const;
+
 /**
  * Category definitions - fixed enum shared with backend.
  * Index = category code, value = { name, color class, icon }
