@@ -17,9 +17,9 @@ export default function DateSelector({
   const isReconstructedView = dateStatus === "reconstructed";
 
   return (
-    <div className="flex flex-wrap items-center gap-4">
-      <div className="flex items-center gap-2">
-        <label htmlFor="date-picker" className="text-sm text-zinc-400">
+    <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3 sm:gap-4">
+      <div className="flex items-center gap-2 w-full sm:w-auto">
+        <label htmlFor="date-picker" className="text-sm text-zinc-400 shrink-0">
           Date:
         </label>
         <input
@@ -27,12 +27,12 @@ export default function DateSelector({
           type="date"
           value={dateString}
           onChange={(e) => onDateChange(e.target.value)}
-          className="bg-[var(--surface)] border border-[var(--border)] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[var(--accent)] transition-colors"
+          className="w-full sm:w-auto min-h-11 bg-[var(--surface)] border border-[var(--border)] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[var(--accent)] transition-colors"
         />
       </div>
 
       <span
-        className={`px-3 py-1 text-xs rounded-full border ${
+        className={`w-fit px-3 py-1 text-xs rounded-full border ${
           isFuture
             ? "border-yellow-500/40 text-yellow-300 bg-yellow-500/10"
             : isReconstructedView

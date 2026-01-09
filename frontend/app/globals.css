@@ -40,6 +40,20 @@ body {
   font-family: var(--font-sans), system-ui, sans-serif;
 }
 
+/* Mobile UX helpers */
+html {
+  /* Respect iOS safe areas when pages add padding with env() */
+  background: var(--background);
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
 /* Hour block category colors */
 .cat-0 { background-color: var(--cat-0); }
 .cat-1 { background-color: var(--cat-1); }

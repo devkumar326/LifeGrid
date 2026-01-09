@@ -18,7 +18,7 @@ export default function HourGrid({
   isReconstructedView,
 }: HourGridProps) {
   return (
-    <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2 mb-8">
+    <div className="grid grid-cols-3 sm:grid-cols-6 md:grid-cols-8 gap-3 sm:gap-2 mb-8">
       {hours.map((categoryIndex, hourIndex) => (
         (() => {
           const isUnassigned = categoryIndex === UNASSIGNED || Number.isNaN(categoryIndex);
@@ -35,19 +35,22 @@ export default function HourGrid({
           disabled={disabled}
           className={`
             ${colorClass}
-            aspect-square rounded-lg flex flex-col items-center justify-center
-            hover:opacity-80 active:scale-95 transition-all
+            aspect-square min-h-11 min-w-11 rounded-lg flex flex-col items-center justify-center
+            touch-manipulation active:scale-[0.98] transition-transform
+            sm:hover:opacity-80
             border border-white/10
             ${isReconstructedView ? "opacity-70" : ""}
             ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}
+            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)]
           `}
           title={title}
+          aria-label={title}
         >
-          <span className="text-xs font-mono opacity-70">{formatHour(hourIndex)}</span>
+          <span className="text-xs sm:text-[11px] font-mono opacity-70">{formatHour(hourIndex)}</span>
           {!isUnassigned && category?.icon ? (
-            <span className="text-base mt-1 opacity-80">{category.icon}</span>
+            <span className="text-lg sm:text-base mt-1 opacity-80 leading-none">{category.icon}</span>
           ) : (
-            <span className="text-base mt-1 opacity-0">•</span>
+            <span className="text-lg sm:text-base mt-1 opacity-0 leading-none">•</span>
           )}
         </button>
           );

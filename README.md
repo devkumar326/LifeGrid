@@ -1,168 +1,118 @@
-# LifeGrid 🗓️
+# LifeGrid
 
-**Track how you spend every hour of your life.**
+## Project Overview
 
-LifeGrid is an hourly life-tracking application that helps you visualize and log how you spend each hour of every day across 12 meaningful categories.
+LifeGrid is a daily, hour-by-hour life logging tool.
 
-![LifeGrid](frontend/public/lifegridIcn.png)
+It’s inspired by the clarity of spreadsheets, but built as a focused web app: a simple 24-hour grid, a few categories, and a place to write down what the day meant.
 
-## Overview
+It’s designed for self-awareness, not productivity pressure.
 
-LifeGrid lets you:
-- **Log activities by hour** — Click through a 24-hour grid to categorize each hour of your day
-- **Track across 12 categories** — Sleep, Work, Learning, Exercise, Social, and more
-- **Review past days** — Navigate to any date and see (or edit) how you spent your time
-- **Identify patterns** — Visual color-coding makes it easy to spot habits and time allocation
+## Core Philosophy
 
-## Categories
-
-| Code | Category | Icon |
-|------|----------|------|
-| 0 | Sleep | 🌙 |
-| 1 | Work | 💼 |
-| 2 | Learning & Building | 📘 |
-| 3 | Deep Thinking / Reflection | 🧠 |
-| 4 | Exercise & Health | 🏋️ |
-| 5 | Friends & Social | 🧑‍🤝‍🧑 |
-| 6 | Relaxation & Leisure | 🎮 |
-| 7 | Dating / Partner | ❤️ |
-| 8 | Family | 👪 |
-| 9 | Life Admin / Chores | 🧾 |
-| 10 | Travel / Commute | ✈️ |
-| 11 | Getting Ready / Misc | 🚿 |
-
-## Tech Stack
-
-| Layer | Technology |
-|-------|------------|
-| **Frontend** | Next.js 16, React 19, TypeScript, Tailwind CSS 4 |
-| **Backend** | FastAPI, Python 3.11+, SQLAlchemy 2.0 |
-| **Database** | PostgreSQL |
-
-## Project Structure
-
-```
-LifeGrid/
-├── frontend/          # Next.js frontend application
-│   ├── app/           # App router pages & layouts
-│   ├── components/    # React components
-│   ├── lib/           # Utilities, API client, helpers
-│   └── types/         # TypeScript type definitions
-├── backend/           # FastAPI backend API
-│   ├── main.py        # API routes & app config
-│   ├── models.py      # SQLAlchemy ORM models
-│   ├── schemas.py     # Pydantic validation schemas
-│   └── database.py    # Database connection setup
-└── README.md          # You are here
-```
-
-## Quick Start
-
-### Prerequisites
-
-- **Node.js** 18+ and npm
-- **Python** 3.11+
-- **PostgreSQL** 14+
-
-### 1. Clone & Setup Database
-
-```bash
-# Create PostgreSQL database
-createdb lifegrid
-
-# Or via psql
-psql -c "CREATE DATABASE lifegrid;"
-```
-
-### 2. Backend Setup
-
-```bash
-cd backend
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Configure environment
-echo "DATABASE_URL=postgresql://localhost/lifegrid" > .env
-
-# Run the server
-uvicorn main:app --reload
-```
-
-Backend runs at: http://localhost:8000
-
-### 3. Frontend Setup
-
-```bash
-cd frontend
-
-# Install dependencies
-npm install
-
-# Run development server
-npm run dev
-```
-
-Frontend runs at: http://localhost:3000
-
-## API Endpoints
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `/` | Health check |
-| `GET` | `/day-log/{date}` | Get log for a specific date |
-| `PUT` | `/day-log/{date}` | Create or update a day's log |
-| `GET` | `/categories` | List all category definitions |
-
-**Date format:** `YYYY-MM-DD`
-
-See detailed API documentation at http://localhost:8000/docs when the backend is running.
-
-## Development
-
-### Running Both Services
-
-Open two terminals:
-
-```bash
-# Terminal 1 - Backend
-cd backend && source venv/bin/activate && uvicorn main:app --reload
-
-# Terminal 2 - Frontend
-cd frontend && npm run dev
-```
-
-### Environment Variables
-
-**Backend** (`backend/.env`):
-```env
-DATABASE_URL=postgresql://user:password@localhost:5432/lifegrid
-```
-
-**Frontend** (optional `frontend/.env.local`):
-```env
-NEXT_PUBLIC_API_URL=http://localhost:8000
-```
+- **Reflection-first over analytics-first**: summaries exist to help you notice patterns, not to optimize you.
+- **Manual logging as intentional friction**: choosing how to label an hour is part of the point.
+- **No gamification**: no streaks, scores, leaderboards, or “perfect days”.
 
 ## Features
 
-- ✅ 24-hour interactive grid
-- ✅ 12 activity categories with color coding
-- ✅ Date navigation (past, today)
-- ✅ Auto-save with unsaved changes indicator
-- ✅ Reconstructed entries flagged for historical logging
-- ✅ Future date protection (can't log future days)
-- ✅ Responsive design
+### V1 (MVP)
 
-## License
+- **24-hour day grid**
+- **Category-based logging per hour**
+- **Color-coded categories**
+- **View and edit past days**
+- **Data persisted per date**
 
-MIT
+### V2 (Current)
 
----
+**Daily Log improvements**
 
-**Built with ☕ and curiosity about where time goes.**
+- **Explicit Unassigned hours** (neutral grey)
+- **No default assumptions** (Sleep only when chosen)
+- **Mobile-friendly interaction**
+
+**Daily Summary**
+
+- **Highlight of the day**
+- **Free-text reflection**
+- **Auto-derived metrics**
+  - Tracked hours
+  - Unassigned hours
+  - Top categories
+
+**Dashboard (read-only)**
+
+- **Weekly overview**
+- **Per-category hour distribution**
+- **Average sleep over logged days**
+- **Unassigned hours included for honesty**
+
+**Notable Events**
+
+- **Lightweight event logging**
+- **Date-based grouping**
+- **Optional details**
+- **Designed to capture moments, not timelines**
+
+## Screenshots
+
+Placeholder: desktop and mobile screenshots will be added here.
+
+## Tech Stack
+
+- **Frontend**: Next.js (App Router), TypeScript
+- **Backend**: FastAPI, PostgreSQL, SQLAlchemy
+- **Styling**: CSS with a utility-first approach (small composable classes + CSS variables)
+- **Deployment**: self-hosted / personal
+
+## Local Development
+
+### Backend
+
+Prereqs: Python 3.11+, PostgreSQL 14+
+
+```bash
+createdb lifegrid
+cd backend
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+echo "DATABASE_URL=postgresql://localhost/lifegrid" > .env
+uvicorn main:app --reload
+```
+
+Backend: `http://localhost:8000` (docs at `http://localhost:8000/docs`)
+
+### Frontend
+
+Prereqs: Node.js 18+
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Frontend: `http://localhost:3000`
+
+### Environment expectations
+
+- **Backend** (`backend/.env`): `DATABASE_URL=postgresql://...`
+- **Frontend** (optional `frontend/.env.local`): `NEXT_PUBLIC_API_URL=http://localhost:8000`
+
+## Roadmap (short)
+
+This is a personal roadmap, not a promise:
+
+- **Mobile-first polish**
+- **Monthly / yearly views**
+- **Export (CSV / JSON)**
+- **Offline-first support**
+
+## License / Personal Use Note
+
+MIT.
+
+LifeGrid is built for personal use. If you fork it, please keep the spirit: calm, reflection-first, and not growth-optimized.
 

@@ -158,23 +158,25 @@ export default function Home() {
   const hasUnsavedAnyChanges = hasUnsavedChanges || hasUnsavedSummaryChanges;
 
   return (
-    <div className="min-h-screen p-6 md:p-10">
+    <div className="min-h-screen p-4 sm:p-6 md:p-10 pb-[calc(1rem+env(safe-area-inset-bottom))]">
       <div className="max-w-4xl mx-auto">
         <Header />
 
         {/* Date Selector & Save Button */}
-        <div className="flex flex-wrap items-center gap-4 mb-8">
-          <DateSelector
-            dateString={selectedDateString}
-            onDateChange={handleDateChange}
-            dateStatus={dateStatus}
-            loading={loading}
-          />
+        <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3 sm:gap-4 mb-8">
+          <div className="w-full sm:w-auto">
+            <DateSelector
+              dateString={selectedDateString}
+              onDateChange={handleDateChange}
+              dateStatus={dateStatus}
+              loading={loading}
+            />
+          </div>
 
           <button
             onClick={handleSave}
             disabled={saving || !hasUnsavedAnyChanges || isFuture}
-            className="px-4 py-2 bg-[var(--accent)] hover:bg-[var(--accent-hover)] disabled:opacity-50 disabled:cursor-not-allowed rounded-lg text-sm font-medium transition-colors"
+            className="w-full sm:w-auto min-h-11 px-4 py-3 sm:py-2 bg-[var(--accent)] sm:hover:bg-[var(--accent-hover)] disabled:opacity-50 disabled:cursor-not-allowed rounded-lg text-sm font-medium transition-colors"
           >
             {saving ? "Saving..." : hasUnsavedAnyChanges ? "Save" : "Saved"}
           </button>
