@@ -182,10 +182,17 @@ GET /categories
 
 ```
 backend/
-├── main.py           # FastAPI app, routes, CORS config
-├── models.py         # SQLAlchemy ORM models
-├── schemas.py        # Pydantic request/response schemas
-├── database.py       # Database connection & session management
+├── main.py           # Entry-point shim (re-exports `app` from app/main.py)
+├── app/              # Application package (best-practice structure)
+│   ├── main.py       # FastAPI app composition (CORS, routers, lifespan)
+│   ├── api/          # Routers + endpoint modules
+│   ├── core/         # Config/constants
+│   ├── db/           # SQLAlchemy engine/session/Base
+│   ├── models/       # ORM models (split by domain)
+│   └── schemas/      # Pydantic schemas (split by domain)
+├── models.py         # Back-compat shim (re-exports from app/models)
+├── schemas.py        # Back-compat shim (re-exports from app/schemas)
+├── database.py       # Back-compat shim (re-exports from app/db + config)
 ├── requirements.txt  # Python dependencies
 └── venv/             # Virtual environment (gitignored)
 ```

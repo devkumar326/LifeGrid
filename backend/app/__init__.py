@@ -1,0 +1,3 @@
+"""LifeGrid backend application package."""
+
+
