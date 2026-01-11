@@ -5,6 +5,7 @@ import CategoryLegend from "../components/CategoryLegend";
 import DateSelector from "../components/DateSelector";
 import Header from "../components/Header";
 import HourGrid from "../components/HourGrid";
+import MobileTimeline from "../components/MobileTimeline";
 import DailySummary from "../components/DailySummary";
 import { fetchDayLog, fetchDailySummary, saveDayLog, saveDailySummary } from "../lib/api";
 import { CATEGORY_COUNT, UNASSIGNED } from "../lib/categories";
@@ -29,6 +30,18 @@ export default function Home() {
   const [highlight, setHighlight] = useState<string>("");
   const [reflection, setReflection] = useState<string>("");
   const [hasUnsavedSummaryChanges, setHasUnsavedSummaryChanges] = useState(false);
+  const [viewMode, setViewMode] = useState<"grid" | "timeline">("grid");
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile viewport
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const dateStatus: DateStatus = useMemo(
     () => getDateStatusFromString(selectedDateString),
@@ -195,13 +208,48 @@ export default function Home() {
           </div>
         )}
 
-        {/* Hour Grid */}
-        <HourGrid
-          hours={hours}
-          onHourClick={handleHourClick}
-          disabled={isFuture}
-          isReconstructedView={isReconstructedView}
-        />
+        {/* Mobile View Toggle - V3 */}
+        {isMobile && (
+          <div className="mb-4 flex items-center gap-2 justify-center">
+            <button
+              onClick={() => setViewMode("grid")}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                viewMode === "grid"
+                  ? "bg-[var(--accent)] text-white"
+                  : "bg-[var(--surface)] text-zinc-400 border border-[var(--border)]"
+              }`}
+            >
+              Grid
+            </button>
+            <button
+              onClick={() => setViewMode("timeline")}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                viewMode === "timeline"
+                  ? "bg-[var(--accent)] text-white"
+                  : "bg-[var(--surface)] text-zinc-400 border border-[var(--border)]"
+              }`}
+            >
+              Timeline
+            </button>
+          </div>
+        )}
+
+        {/* Hour Grid or Timeline - V3 */}
+        {viewMode === "grid" || !isMobile ? (
+          <HourGrid
+            hours={hours}
+            onHourClick={handleHourClick}
+            disabled={isFuture}
+            isReconstructedView={isReconstructedView}
+          />
+        ) : (
+          <div className="mb-8">
+            <MobileTimeline hours={hours} date={selectedDateString} />
+            <div className="mt-4 text-xs text-zinc-500 text-center">
+              Switch to Grid view to edit hours
+            </div>
+          </div>
+        )}
 
         <DailySummary
           hours={hours}

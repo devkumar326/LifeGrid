@@ -3,7 +3,12 @@
 from app.schemas.day_log import DayLogCreate, DayLogResponse
 from app.schemas.daily_summary import DailySummaryCreate, DailySummaryResponse
 from app.schemas.notable_event import NotableEventCreate, NotableEventResponse
-from app.schemas.weekly_dashboard import WeeklyDashboardDay, WeeklyDashboardResponse
+from app.schemas.weekly_dashboard import (
+    CategoryTotal,
+    WeeklyDashboardDay,
+    WeeklyDashboardResponse,
+    WeeklyInsights,
+)
 
 __all__ = [
     "DayLogCreate",
@@ -14,6 +19,8 @@ __all__ = [
     "NotableEventResponse",
     "WeeklyDashboardDay",
     "WeeklyDashboardResponse",
+    "CategoryTotal",
+    "WeeklyInsights",
 ]
 
 

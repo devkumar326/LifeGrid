@@ -24,7 +24,7 @@ It’s designed for self-awareness, not productivity pressure.
 - **View and edit past days**
 - **Data persisted per date**
 
-### V2 (Current)
+### V2
 
 **Daily Log improvements**
 
@@ -54,6 +54,52 @@ It’s designed for self-awareness, not productivity pressure.
 - **Date-based grouping**
 - **Optional details**
 - **Designed to capture moments, not timelines**
+
+### V3 (Current) ✨
+
+**Weekly Overview Grid**
+
+- **7-day mini stacked grids** (Monday → Sunday)
+- **Visual time distribution** per day
+- **Color-coded categories** with unassigned hours
+- **Read-only reflection view**
+
+**Insight Cards**
+
+- **Average Sleep** (hours/day, logged days only)
+- **Most Frequent Category** (excluding unassigned)
+- **Most Balanced Day** (lowest variance in distribution)
+- **No coaching or productivity advice**
+
+**Category Distribution**
+
+- **Donut chart visualization** of weekly time
+- **Proportional view** with legend
+- **Includes unassigned hours** for honesty
+- **Fully responsive** (mobile + desktop)
+
+**Enhanced Hour Grid**
+
+- **Icon-only display** (cleaner, more visual)
+- **Hover tooltips** (desktop) show category names
+- **Long-press support** (mobile) via native tooltips
+- **Unassigned hours** show time, no icon
+
+**Mobile Timeline View**
+
+- **Optional toggle** (Grid ↔ Timeline)
+- **Vertical 24-hour list** with colored blocks
+- **Category icons + names** displayed
+- **Read-only** (switch to Grid to edit)
+- **Mobile-only feature** (< 640px screens)
+
+**Technical Improvements**
+
+- **Server-side insights** computation
+- **Variance calculation** for balanced day
+- **Category totals** sorted by hours
+- **Backward compatible** with V2 data
+- **No breaking changes**
 
 ## Screenshots
 
@@ -101,14 +147,28 @@ Frontend: `http://localhost:3000`
 - **Backend** (`backend/.env`): `DATABASE_URL=postgresql://...`
 - **Frontend** (optional `frontend/.env.local`): `NEXT_PUBLIC_API_URL=http://localhost:8000`
 
+## Documentation
+
+### V3 Guides
+- **[V3_IMPLEMENTATION.md](V3_IMPLEMENTATION.md)** - Complete feature overview and technical details
+- **[QUICKSTART_V3.md](QUICKSTART_V3.md)** - Setup and testing guide
+- **[V3_ARCHITECTURE.md](V3_ARCHITECTURE.md)** - System architecture and data flow
+- **[V3_VISUAL_GUIDE.md](V3_VISUAL_GUIDE.md)** - Visual feature guide with examples
+- **[V3_COMPLETION_SUMMARY.md](V3_COMPLETION_SUMMARY.md)** - Implementation checklist and statistics
+
+### Backend
+- **[backend/README.md](backend/README.md)** - API documentation and database schema
+
 ## Roadmap (short)
 
 This is a personal roadmap, not a promise:
 
-- **Mobile-first polish**
+- ✅ ~~Weekly visualization and insights~~ (V3 complete)
+- ✅ ~~Mobile timeline view~~ (V3 complete)
 - **Monthly / yearly views**
 - **Export (CSV / JSON)**
 - **Offline-first support**
+- **Custom date range selection**
 
 ## License / Personal Use Note
 

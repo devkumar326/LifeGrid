@@ -8,6 +8,7 @@ Schemas now live in `app.schemas.*`.
 """
 
 from app.schemas import (
+    CategoryTotal,
     DailySummaryCreate,
     DailySummaryResponse,
     DayLogCreate,
@@ -16,6 +17,7 @@ from app.schemas import (
     NotableEventResponse,
     WeeklyDashboardDay,
     WeeklyDashboardResponse,
+    WeeklyInsights,
 )
 
 __all__ = [
@@ -27,5 +29,7 @@ __all__ = [
     "NotableEventResponse",
     "WeeklyDashboardDay",
     "WeeklyDashboardResponse",
+    "CategoryTotal",
+    "WeeklyInsights",
 ]
 
