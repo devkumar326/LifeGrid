@@ -19,8 +19,12 @@ PROJECT_NAME = "LifeGrid API"
 PROJECT_DESCRIPTION = "MVP API for hourly life tracking"
 PROJECT_VERSION = "0.1.0"
 
-# Sensible local default for development.
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://localhost/lifegrid")
+USER = os.getenv("user")
+PASSWORD = os.getenv("password")
+HOST = os.getenv("host")
+PORT = os.getenv("port")
+DBNAME = os.getenv("dbname")
+DATABASE_URL = f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}:{PORT}/{DBNAME}?sslmode=require"
 
 # Comma-separated list, or "*" to allow all origins (MVP).
 _cors_origins_raw = os.getenv("CORS_ORIGINS", "*").strip()

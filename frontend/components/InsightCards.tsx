@@ -27,10 +27,24 @@ export default function InsightCards({
     ? `${insights.average_sleep_hours.toFixed(1)}h/day`
     : "No data";
 
-  // Get most frequent category name
-  const mostFrequentCat = insights.most_frequent_category !== null
-    ? CATEGORIES[insights.most_frequent_category]
-    : null;
+  // Most frequent category (dashboard UX): exclude Sleep since it's almost always dominant.
+  // Fallback to backend-computed most_frequent_category if totals are missing.
+  const mostFrequentNonSleepTotal: CategoryTotal | null =
+    categoryTotals.find((ct) => ct.category_id !== 0 && ct.hours > 0) ??
+    categoryTotals.find((ct) => ct.hours > 0) ??
+    null;
+
+  const mostFrequentCategoryId =
+    mostFrequentNonSleepTotal?.category_id ??
+    (insights.most_frequent_category !== null ? insights.most_frequent_category : null);
+
+  const mostFrequentCat =
+    mostFrequentCategoryId !== null ? CATEGORIES[mostFrequentCategoryId] : null;
+
+  const mostFrequentHours =
+    mostFrequentCategoryId !== null
+      ? categoryTotals.find((ct) => ct.category_id === mostFrequentCategoryId)?.hours ?? 0
+      : 0;
 
   // Format most balanced day
   const balancedDayLabel = insights.most_balanced_day
@@ -69,7 +83,7 @@ export default function InsightCards({
                 </span>
               </div>
               <div className="text-xs text-zinc-600">
-                {categoryTotals[0]?.hours ?? 0}h this week
+                {mostFrequentHours}h this week
               </div>
             </>
           ) : (

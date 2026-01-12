@@ -1,4 +1,5 @@
 import { DateStatus } from "../types/dayLog";
+import { parseDateString } from "../lib/date";
 
 type DateSelectorProps = {
   dateString: string;
@@ -15,6 +16,8 @@ export default function DateSelector({
 }: DateSelectorProps) {
   const isFuture = dateStatus === "future";
   const isReconstructedView = dateStatus === "reconstructed";
+  const weekdayLabel =
+    parseDateString(dateString)?.toLocaleDateString(undefined, { weekday: "long" }) ?? "";
 
   return (
     <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3 sm:gap-4">
@@ -30,6 +33,12 @@ export default function DateSelector({
           className="w-full sm:w-auto min-h-11 bg-[var(--surface)] border border-[var(--border)] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[var(--accent)] transition-colors"
         />
       </div>
+      
+      {weekdayLabel && (
+        <div className="text-xs text-zinc-500" aria-label="Selected weekday">
+          {weekdayLabel}
+        </div>
+      )}
 
       <span
         className={`w-fit px-3 py-1 text-xs rounded-full border ${

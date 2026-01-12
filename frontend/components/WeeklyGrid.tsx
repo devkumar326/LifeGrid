@@ -13,8 +13,6 @@ type WeeklyGridProps = {
  * Colors map exactly to existing category colors, including unassigned (grey).
  */
 export default function WeeklyGrid({ days }: WeeklyGridProps) {
-  const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-
   return (
     <div className="bg-[var(--surface)] border border-[var(--border)] rounded-lg p-4 mb-6">
       <h2 className="text-sm font-medium text-zinc-300 mb-4">Weekly Overview</h2>
@@ -48,7 +46,7 @@ export default function WeeklyGrid({ days }: WeeklyGridProps) {
 
           const isEmpty = !day.has_log || hourBlocks.length === 0;
           const dateObj = new Date(day.date + "T00:00:00");
-          const dayName = dayNames[idx % 7];
+          const dayName = dateObj.toLocaleDateString(undefined, { weekday: "short" });
           const dateNum = dateObj.getDate();
 
           return (

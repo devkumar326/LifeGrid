@@ -109,8 +109,8 @@ export default function DashboardPage() {
                   <div className="text-lg font-semibold">{data.total_tracked_hours}</div>
                 </div>
                 <div className="bg-black/20 border border-white/5 rounded-lg p-3">
-                  <div className="text-xs text-zinc-400">Average sleep</div>
-                  <div className="text-sm text-zinc-200 mt-1">{avgSleepLabel}</div>
+                  <div className="text-xs text-zinc-400">Unassigned hours</div>
+                  <div className="text-lg font-semibold">{totalUnassignedHours}</div>
                 </div>
                 <div className="bg-black/20 border border-white/5 rounded-lg p-3">
                   <div className="text-xs text-zinc-400">Logged days</div>

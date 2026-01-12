@@ -24,7 +24,17 @@ async def lifespan(_: FastAPI):
     # In production, you'd use Alembic migrations instead of create_all.
     import app.models  # noqa: F401
 
-    Base.metadata.create_all(bind=engine)
+    # Test database connection on startup
+    try:
+        with engine.connect() as connection:
+            print("✅ Database connection successful!")
+        Base.metadata.create_all(bind=engine)
+        print("✅ Database tables created/verified!")
+    except Exception as e:
+        print(f"❌ Database connection failed: {e}")
+        print(f"📝 Check your DATABASE_URL in .env file")
+        raise
+    
     yield
 
 
