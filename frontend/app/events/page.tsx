@@ -96,7 +96,7 @@ export default function EventsPage() {
   };
 
   return (
-    <div className="min-h-screen p-6 md:p-10">
+    <div className="min-h-screen p-6 md:p-10 pt-[calc(1rem+env(safe-area-inset-top))] pb-[calc(1rem+env(safe-area-inset-bottom))]">
       <div className="max-w-4xl mx-auto">
         <Header />
 

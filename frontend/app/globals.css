@@ -38,6 +38,10 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
+  min-height: 100vh;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+  overscroll-behavior-y: contain;
 }
 
 /* Mobile UX helpers */
@@ -52,6 +56,20 @@ input,
 select,
 textarea {
   -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  user-select: none;
+}
+
+/* Interactive grid ergonomics */
+.hour-grid {
+  user-select: none;
+}
+
+.hour-grid button {
+  touch-action: manipulation;
+  -webkit-user-select: none;
 }
 
 /* Hour block category colors */

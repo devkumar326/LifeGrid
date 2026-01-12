@@ -31,7 +31,7 @@ export default function HourGrid({
   const [hoveredHour, setHoveredHour] = useState<number | null>(null);
 
   return (
-    <div className="mb-8">
+    <div className="mb-8 hour-grid">
       <div className="grid grid-cols-3 sm:grid-cols-6 md:grid-cols-8 gap-3 sm:gap-2">
         {hours.map((categoryIndex, hourIndex) => {
           const isUnassigned = categoryIndex === UNASSIGNED || Number.isNaN(categoryIndex);
@@ -50,8 +50,8 @@ export default function HourGrid({
                 disabled={disabled}
                 className={`
                   ${colorClass}
-                  w-full aspect-square min-h-11 min-w-11 rounded-lg flex flex-col items-center justify-center
-                  touch-manipulation active:scale-[0.98] transition-all duration-200
+                  w-full aspect-square min-h-14 min-w-14 sm:min-h-12 sm:min-w-12 rounded-xl flex flex-col items-center justify-center
+                  touch-manipulation active:scale-[0.98] transition-all duration-200 select-none
                   sm:hover:opacity-90 sm:hover:scale-105
                   border border-white/10
                   ${isReconstructedView ? "opacity-70" : ""}

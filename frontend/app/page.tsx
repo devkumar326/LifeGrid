@@ -171,7 +171,7 @@ export default function Home() {
   const hasUnsavedAnyChanges = hasUnsavedChanges || hasUnsavedSummaryChanges;
 
   return (
-    <div className="min-h-screen p-4 sm:p-6 md:p-10 pb-[calc(1rem+env(safe-area-inset-bottom))]">
+    <div className="min-h-screen p-4 sm:p-6 md:p-10 pt-[calc(1rem+env(safe-area-inset-top))] pb-[calc(1rem+env(safe-area-inset-bottom))]">
       <div className="max-w-4xl mx-auto">
         <Header />
 
