@@ -4,7 +4,7 @@ Next.js frontend for the LifeGrid hourly life-tracking application.
 
 ## Overview
 
-A responsive web interface that displays a 24-hour grid for logging daily activities. Users click on hour blocks to cycle through 12 activity categories, then save their logs to the backend.
+A responsive web interface that displays a 24-hour grid for logging daily activities. Users click on hour blocks to cycle through 12 activity categories, then save their logs to the backend. Daily Summary includes a calm Dream section for optional reflection.
 
 ## Tech Stack
 
@@ -107,6 +107,23 @@ Date input with visual status indicators.
 ### `CategoryLegend`
 
 Displays all 12 categories with their colors and icons.
+
+## Dream Logging (3-State)
+
+The Dream UI lives inside the Daily Summary panel:
+- `components/DailySummary.tsx` renders the Dream selector and optional textarea
+- `app/page.tsx` manages dream state, saving, and offline-tolerant behavior
+
+**UX philosophy (optional):**
+- Calm, non-intrusive, reflection-first
+- No pressure to remember details
+- No gamification or reminders
+
+## PWA & Offline Behavior
+
+- Installable PWA shell (service worker + manifest)
+- Dream input works offline; changes are kept in the UI
+- Saves are best-effort when connection returns (no background sync)
 
 ## Categories
 

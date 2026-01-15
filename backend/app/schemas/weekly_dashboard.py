@@ -28,6 +28,14 @@ class WeeklyInsights(BaseModel):
     most_balanced_day: date | None  # Day with lowest variance in hour distribution
 
 
+class DreamMetrics(BaseModel):
+    """Counts for dream logging in the last 7 days."""
+
+    dream_days: int
+    remembered_count: int
+    unremembered_count: int
+
+
 class WeeklyDashboardResponse(BaseModel):
     start_date: date
     end_date: date
@@ -38,5 +46,6 @@ class WeeklyDashboardResponse(BaseModel):
     # V3 additions
     category_totals: list[CategoryTotal]  # Sorted descending by hours
     insights: WeeklyInsights
+    dreams: DreamMetrics
 
 

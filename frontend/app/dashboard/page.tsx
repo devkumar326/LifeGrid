@@ -117,6 +117,15 @@ export default function DashboardPage() {
                   <div className="text-lg font-semibold">{data.logged_days}</div>
                 </div>
               </div>
+
+              <div className="mt-4 border-t border-white/5 pt-3">
+                <div className="text-xs text-zinc-500 mb-2">Dreams (last 7 days)</div>
+                <div className="text-sm text-zinc-300 space-y-1">
+                  <div>Dream days: {data.dreams.dream_days}</div>
+                  <div>Remembered dreams: {data.dreams.remembered_count}</div>
+                  <div>Unremembered dreams: {data.dreams.unremembered_count}</div>
+                </div>
+              </div>
             </div>
 
             {/* Category Totals - V3 */}

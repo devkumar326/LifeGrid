@@ -178,6 +178,58 @@ GET /categories
 }
 ```
 
+### Get Dream
+
+```http
+GET /dreams/{date}
+```
+
+**Parameters:**
+- `date` (path) — Date in `YYYY-MM-DD` format
+
+**Response (200):**
+```json
+{
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "date": "2026-01-04",
+  "dream_state": 2,
+  "description": "A few fragments about a city at dusk"
+}
+```
+
+**Response (200 - no data):**
+```json
+null
+```
+
+### Create/Update Dream (Upsert)
+
+```http
+POST /dreams
+```
+
+**Request Body:**
+```json
+{
+  "date": "2026-01-04",
+  "dream_state": 1,
+  "description": null
+}
+```
+
+**Dream State Enum:**
+- `0` — No dream
+- `1` — Had a dream (not remembered)
+- `2` — Remembered a dream (optional description)
+
+### Reset Dream (Optional)
+
+```http
+DELETE /dreams/{date}
+```
+
+Resets the dream entry to `No Dream`.
+
 ## Project Structure
 
 ```
@@ -207,6 +259,17 @@ backend/
 | `date` | DATE | Unique, Not Null, Indexed |
 | `hours` | SMALLINT[] | Not Null (array of 24 integers) |
 | `is_reconstructed` | BOOLEAN | Not Null, Default: false |
+
+### `dreams` Table
+
+| Column | Type | Constraints |
+|--------|------|-------------|
+| `id` | UUID | Primary Key, auto-generated |
+| `date` | DATE | Unique, Not Null, Indexed |
+| `dream_state` | SMALLINT | Not Null (0 = none, 1 = unremembered, 2 = remembered) |
+| `description` | TEXT | Nullable |
+| `created_at` | TIMESTAMP | Not Null, default now |
+| `updated_at` | TIMESTAMP | Not Null, auto-updated |
 
 ## Key Concepts
 

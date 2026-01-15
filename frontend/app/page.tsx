@@ -7,7 +7,14 @@ import Header from "../components/Header";
 import HourGrid from "../components/HourGrid";
 import MobileTimeline from "../components/MobileTimeline";
 import DailySummary from "../components/DailySummary";
-import { fetchDayLog, fetchDailySummary, saveDayLog, saveDailySummary } from "../lib/api";
+import {
+  fetchDayLog,
+  fetchDailySummary,
+  fetchDream,
+  saveDayLog,
+  saveDailySummary,
+  saveDream,
+} from "../lib/api";
 import { CATEGORY_COUNT, UNASSIGNED } from "../lib/categories";
 import {
   getDateStatusFromString,
@@ -15,6 +22,7 @@ import {
   todayString,
 } from "../lib/date";
 import type { DateStatus } from "../types/dayLog";
+import { DreamState } from "../types/dream";
 
 // Default hours: all set to Unassigned (-1)
 const DEFAULT_HOURS = (): number[] => Array(24).fill(UNASSIGNED);
@@ -30,6 +38,9 @@ export default function Home() {
   const [highlight, setHighlight] = useState<string>("");
   const [reflection, setReflection] = useState<string>("");
   const [hasUnsavedSummaryChanges, setHasUnsavedSummaryChanges] = useState(false);
+  const [dreamState, setDreamState] = useState<DreamState>(DreamState.None);
+  const [dreamDescription, setDreamDescription] = useState("");
+  const [hasUnsavedDreamChanges, setHasUnsavedDreamChanges] = useState(false);
   const [viewMode, setViewMode] = useState<"grid" | "timeline">("grid");
   const [isMobile, setIsMobile] = useState(false);
 
@@ -67,8 +78,11 @@ export default function Home() {
     setError(null);
 
     try {
-      const data = await fetchDayLog(dateString);
-      const summary = await fetchDailySummary(dateString);
+      const [data, summary, dream] = await Promise.all([
+        fetchDayLog(dateString),
+        fetchDailySummary(dateString),
+        fetchDream(dateString),
+      ]);
 
       if (data === null) {
         // No log exists for this date - use defaults
@@ -88,8 +102,17 @@ export default function Home() {
         setReflection(summary.reflection ?? "");
       }
 
+      if (dream === null) {
+        setDreamState(DreamState.None);
+        setDreamDescription("");
+      } else {
+        setDreamState(dream.dream_state ?? DreamState.None);
+        setDreamDescription(dream.description ?? "");
+      }
+
       setHasUnsavedChanges(false);
       setHasUnsavedSummaryChanges(false);
+      setHasUnsavedDreamChanges(false);
     } catch (err) {
       // If backend is down, still allow local editing
       console.error("Failed to fetch day log:", err);
@@ -98,6 +121,8 @@ export default function Home() {
       setIsReconstructedFlag(false);
       setHighlight("");
       setReflection("");
+      setDreamState(DreamState.None);
+      setDreamDescription("");
     } finally {
       setLoading(false);
     }
@@ -127,10 +152,20 @@ export default function Home() {
       if (hasUnsavedSummaryChanges) {
         ops.push(saveDailySummary(selectedDateString, { highlight, reflection }));
       }
+      if (hasUnsavedDreamChanges) {
+        ops.push(
+          saveDream({
+            date: selectedDateString,
+            dream_state: dreamState,
+            description: dreamDescription || null,
+          })
+        );
+      }
       await Promise.all(ops);
 
       setHasUnsavedChanges(false);
       setHasUnsavedSummaryChanges(false);
+      setHasUnsavedDreamChanges(false);
     } catch (err) {
       console.error("Failed to save day log:", err);
       setError("Could not save. Backend may be offline.");
@@ -168,7 +203,8 @@ export default function Home() {
     setSelectedDateString(value);
   };
 
-  const hasUnsavedAnyChanges = hasUnsavedChanges || hasUnsavedSummaryChanges;
+  const hasUnsavedAnyChanges =
+    hasUnsavedChanges || hasUnsavedSummaryChanges || hasUnsavedDreamChanges;
 
   return (
     <div className="min-h-screen p-4 sm:p-6 md:p-10 pt-[calc(1rem+env(safe-area-inset-top))] pb-[calc(1rem+env(safe-area-inset-bottom))]">
@@ -255,6 +291,8 @@ export default function Home() {
           hours={hours}
           highlight={highlight}
           reflection={reflection}
+          dreamState={dreamState}
+          dreamDescription={dreamDescription}
           onHighlightChange={(v) => {
             setHighlight(v);
             setHasUnsavedSummaryChanges(true);
@@ -262,6 +300,17 @@ export default function Home() {
           onReflectionChange={(v) => {
             setReflection(v);
             setHasUnsavedSummaryChanges(true);
+          }}
+          onDreamStateChange={(state) => {
+            if (state === DreamState.None) {
+              setDreamDescription("");
+            }
+            setDreamState(state);
+            setHasUnsavedDreamChanges(true);
+          }}
+          onDreamDescriptionChange={(value) => {
+            setDreamDescription(value);
+            setHasUnsavedDreamChanges(true);
           }}
           disabled={isFuture}
         />

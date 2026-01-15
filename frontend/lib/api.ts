@@ -3,6 +3,7 @@ import type {
   DailySummaryApiResponse,
   DailySummaryUpsertPayload,
 } from "../types/dailySummary";
+import type { DreamApiResponse, DreamUpsertPayload } from "../types/dream";
 import type { CreateNotableEventPayload, NotableEvent } from "../types/events";
 import type { WeeklyDashboardResponse } from "../types/dashboard";
 import { signalApiFailure, signalApiSuccess } from "./pwaClient";
@@ -72,6 +73,35 @@ export async function saveDailySummary(
       body: JSON.stringify(payload),
     },
     "Failed to save summary"
+  );
+}
+
+export async function fetchDream(dateString: string): Promise<DreamApiResponse> {
+  const response = await request(
+    `${API_BASE}/dreams/${dateString}`,
+    undefined,
+    "Failed to fetch dream"
+  );
+  return response.json();
+}
+
+export async function saveDream(payload: DreamUpsertPayload): Promise<void> {
+  await request(
+    `${API_BASE}/dreams`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    },
+    "Failed to save dream"
+  );
+}
+
+export async function resetDream(dateString: string): Promise<void> {
+  await request(
+    `${API_BASE}/dreams/${dateString}`,
+    { method: "DELETE" },
+    "Failed to reset dream"
   );
 }
 

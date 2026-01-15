@@ -1,13 +1,18 @@
 import { useMemo } from "react";
 
 import { CATEGORIES, CATEGORY_COUNT, UNASSIGNED } from "../lib/categories";
+import { DreamState } from "../types/dream";
 
 type DailySummaryProps = {
   hours: number[];
   highlight: string;
   reflection: string;
+  dreamState: DreamState;
+  dreamDescription: string;
   onHighlightChange: (value: string) => void;
   onReflectionChange: (value: string) => void;
+  onDreamStateChange: (value: DreamState) => void;
+  onDreamDescriptionChange: (value: string) => void;
   disabled: boolean;
 };
 
@@ -15,8 +20,12 @@ export default function DailySummary({
   hours,
   highlight,
   reflection,
+  dreamState,
+  dreamDescription,
   onHighlightChange,
   onReflectionChange,
+  onDreamStateChange,
+  onDreamDescriptionChange,
   disabled,
 }: DailySummaryProps) {
   const { trackedHours, unassignedHours, top3 } = useMemo(() => {
@@ -103,6 +112,59 @@ export default function DailySummary({
             placeholder="Anything you want to remember from today…"
             className="w-full min-h-36 bg-[var(--surface)] border border-[var(--border)] rounded-lg px-3 py-3 text-sm focus:outline-none focus:border-[var(--accent)] transition-colors disabled:opacity-60 resize-y"
           />
+        </div>
+
+        <div>
+          <label className="block text-xs text-zinc-400 mb-2">Dream</label>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <button
+              type="button"
+              onClick={() => onDreamStateChange(DreamState.None)}
+              disabled={disabled}
+              className={`px-3 py-2 rounded-lg border text-sm text-left transition-colors disabled:opacity-60 ${
+                dreamState === DreamState.None
+                  ? "border-zinc-400 text-zinc-200 bg-black/20"
+                  : "border-[var(--border)] text-zinc-400 bg-[var(--surface)]"
+              }`}
+            >
+              No dream
+            </button>
+            <button
+              type="button"
+              onClick={() => onDreamStateChange(DreamState.Unremembered)}
+              disabled={disabled}
+              className={`px-3 py-2 rounded-lg border text-sm text-left transition-colors disabled:opacity-60 ${
+                dreamState === DreamState.Unremembered
+                  ? "border-zinc-400 text-zinc-200 bg-black/20"
+                  : "border-[var(--border)] text-zinc-400 bg-[var(--surface)]"
+              }`}
+            >
+              Had a dream (don&apos;t remember)
+            </button>
+            <button
+              type="button"
+              onClick={() => onDreamStateChange(DreamState.Remembered)}
+              disabled={disabled}
+              className={`px-3 py-2 rounded-lg border text-sm text-left transition-colors disabled:opacity-60 ${
+                dreamState === DreamState.Remembered
+                  ? "border-zinc-400 text-zinc-200 bg-black/20"
+                  : "border-[var(--border)] text-zinc-400 bg-[var(--surface)]"
+              }`}
+            >
+              Remembered a dream
+            </button>
+          </div>
+
+          {dreamState === DreamState.Remembered && (
+            <textarea
+              value={dreamDescription}
+              onChange={(e) => onDreamDescriptionChange(e.target.value)}
+              disabled={disabled}
+              rows={4}
+              placeholder="If any fragments come back, you can note them here…"
+              className="mt-3 w-full min-h-28 bg-[var(--surface)] border border-[var(--border)] rounded-lg px-3 py-3 text-sm focus:outline-none focus:border-[var(--accent)] transition-colors disabled:opacity-60 resize-y"
+            />
+          )}
         </div>
       </div>
     </div>

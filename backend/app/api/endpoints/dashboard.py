@@ -8,7 +8,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from app.api.deps import get_db
-from app.models import DayLog
+from app.models import DayLog, Dream
 from app.schemas import WeeklyDashboardResponse
 
 router = APIRouter(prefix="/dashboard", tags=["dashboard"])
@@ -48,6 +48,20 @@ def weekly_dashboard(db: Session = Depends(get_db)):
 
     logs = db.query(DayLog).filter(DayLog.date >= start, DayLog.date <= end).all()
     by_date = {l.date: l for l in logs}
+
+    dream_records = (
+        db.query(Dream).filter(Dream.date >= start, Dream.date <= end).all()
+    )
+    dream_days = 0
+    remembered_count = 0
+    unremembered_count = 0
+    for dream in dream_records:
+        if dream.dream_state == 2:
+            remembered_count += 1
+            dream_days += 1
+        elif dream.dream_state == 1:
+            unremembered_count += 1
+            dream_days += 1
 
     total_tracked = 0
     total_sleep = 0
@@ -135,6 +149,11 @@ def weekly_dashboard(db: Session = Depends(get_db)):
             "average_sleep_hours": avg_sleep,
             "most_frequent_category": most_frequent_category,
             "most_balanced_day": most_balanced_day,
+        },
+        "dreams": {
+            "dream_days": dream_days,
+            "remembered_count": remembered_count,
+            "unremembered_count": unremembered_count,
         },
     }
 

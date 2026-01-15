@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-LifeGrid is a daily, hour-by-hour life logging tool.
+LifeGrid is a daily, hour-by-hour life logging tool with an installable PWA shell.
 
 It’s inspired by the clarity of spreadsheets, but built as a focused web app: a simple 24-hour grid, a few categories, and a place to write down what the day meant.
 
@@ -100,6 +100,13 @@ It’s designed for self-awareness, not productivity pressure.
 - **Category totals** sorted by hours
 - **Backward compatible** with V2 data
 - **No breaking changes**
+
+**Dream Logging (3-State)**
+
+- **No dream / Had a dream (don’t remember) / Remembered a dream**
+- **Optional free-text only when remembered**
+- **Calm, non-intrusive reflection prompt**
+- **Works offline in the PWA shell (best-effort sync)**
 
 ## Screenshots
 

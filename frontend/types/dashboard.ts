@@ -17,6 +17,12 @@ export type WeeklyInsights = {
   most_balanced_day: string | null;
 };
 
+export type DreamMetrics = {
+  dream_days: number;
+  remembered_count: number;
+  unremembered_count: number;
+};
+
 export type WeeklyDashboardResponse = {
   start_date: string;
   end_date: string;
@@ -27,6 +33,7 @@ export type WeeklyDashboardResponse = {
   // V3 additions
   category_totals: CategoryTotal[];
   insights: WeeklyInsights;
+  dreams: DreamMetrics;
 };
 
 
